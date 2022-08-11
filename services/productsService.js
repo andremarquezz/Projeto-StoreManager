@@ -8,8 +8,8 @@ const getAll = async () => {
   return response;
 };
 
-const getOne = async () => {
-  const data = await ProductModel.getAll();
+const getOne = async (id) => {
+  const data = await ProductModel.getOne(id);
   if (!data) throw new CustomErrors('Product not found', 404);
   const response = { code: 200, data };
   return response;
