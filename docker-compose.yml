@@ -35,6 +35,7 @@ services:
     environment:
       MYSQL_USER: root
       MYSQL_PASSWORD: password
+      MYSQL_DATABASE: StoreManager
       MYSQL_HOST: db # Nome do service logo abaixo
       PORT: '3000'
 

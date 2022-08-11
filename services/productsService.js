@@ -3,11 +3,19 @@ const ProductModel = require('../models/productsModel');
 
 const getAll = async () => {
   const data = await ProductModel.getAll();
-  if (!data) throw new CustomErrors('Produtos não encontrado', 404);
+  if (!data) throw new CustomErrors('Product not found', 404);
+  const response = { code: 200, data };
+  return response;
+};
+
+const getOne = async () => {
+  const data = await ProductModel.getAll();
+  if (!data) throw new CustomErrors('Product not found', 404);
   const response = { code: 200, data };
   return response;
 };
 
 module.exports = {
   getAll,
+  getOne,
 };
