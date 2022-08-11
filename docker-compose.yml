@@ -14,7 +14,7 @@ services:
     # Substitui o comando padrão da imagem do node
     command: bash
     # Restarta a imagem caso algo a faça parar
-    restart: always
+    restart: unless-stopped
     # Diretório padrão de execução
     working_dir: /home/node/app
     # Lista de volumes (diretórios) mapeados de fora para dentro do container
