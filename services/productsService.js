@@ -15,7 +15,15 @@ const getOne = async (id) => {
   return response;
 };
 
+const registerProduct = async (name) => {
+  const data = await ProductModel.registerProduct(name);
+  if (!data) throw new CustomErrors('Problema ao cadastrar produto', 500);
+  const response = { code: 201, data };
+  return response;
+};
+
 module.exports = {
   getAll,
   getOne,
+  registerProduct,
 };
