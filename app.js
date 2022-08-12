@@ -6,12 +6,14 @@ const app = express();
 app.use(express.json());
 
 const productsController = require('./controllers/productsController');
+const salesController = require('./controllers/salesController');
 
 app.get('/', (_request, response) => {
   response.send();
 });
 
 app.use('/products', productsController);
+app.use('/sales', salesController);
 
 app.use((err, _req, res, _next) => {
   res.status(err.code).json({ message: `${err.message}` });
