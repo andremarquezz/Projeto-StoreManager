@@ -37,7 +37,7 @@ describe("Testa a camada Products Service", () => {
       });
     });
   });
-  describe("Testa tratamento de errros", () => {
+  describe("Testa tratamento de erros", () => {
     it("Retorna um erro caso não consiga capturar todos os produtos", async () => {
       sinon.stub(ProductModel, "getAll").resolves(null);
       return expect(productsService.getAll()).to.eventually.rejectedWith(
