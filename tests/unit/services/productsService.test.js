@@ -17,6 +17,16 @@ describe("Testa a camada Products Service", () => {
 
   const fakeOneProduct = { id: 1, name: "Martelo de Thor" };
 
+  it("Retorna um codigo e o produto ao chamar registerProduct", async () => {
+    sinon.stub(ProductModel, "registerProduct").resolves(fakeOneProduct);
+    return expect(
+      productsService.registerProduct("Martelo de Thor")
+    ).to.be.eventually.deep.eq({
+      code: 201,
+      data: fakeOneProduct,
+    });
+  });
+
   describe("Testa a chamada para todos os produtos", () => {
     it("Espera que ao chamar todos os produtos retorne codigo 200 e produtos", async () => {
       sinon.stub(ProductModel, "getAll").resolves(fakeProductsAll);
@@ -43,14 +53,20 @@ describe("Testa a camada Products Service", () => {
       return expect(productsService.getAll()).to.eventually.rejectedWith(
         Error,
         "Product not found"
-      )
+      );
     });
-      it("Retorna um erro caso não consiga capturar um produto", async () => {
+    it("Retorna um erro caso não consiga capturar um produto", async () => {
       sinon.stub(ProductModel, "getOne").resolves(null);
       return expect(productsService.getOne()).to.eventually.rejectedWith(
         Error,
         "Product not found"
       );
+    });
+    it("Retorna um erro caso não consiga registrar o produto", async () => {
+      sinon.stub(ProductModel, "registerProduct").resolves(null);
+      return expect(
+        productsService.registerProduct("teste")
+      ).to.eventually.rejectedWith(Error, "Problema ao cadastrar produto");
     });
   });
 });
