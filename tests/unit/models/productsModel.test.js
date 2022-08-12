@@ -33,14 +33,13 @@ describe("Testa a camada Product Model", () => {
     it("Retorna apenas um objeto com as chaves necessarias", async () => {
       sinon.stub(connection, "execute").resolves([[fakeOneProduct]]);
 
-      const callProductsOne = await productsModel.getOne();
-      expect(callProductsOne).to.be.eq(fakeOneProduct);
+      const callProductsOne = await productsModel.getOne("1");
 
       expect(callProductsOne).to.be.keys("id", "name");
     });
     it("Retorna apenas um produto", async () => {
       sinon.stub(connection, "execute").resolves([[fakeOneProduct]]);
-      const callProductsOne = await productsModel.getOne();
+      const callProductsOne = await productsModel.getOne("1");
 
       expect(callProductsOne).to.be.eq(fakeOneProduct);
     });
