@@ -1,4 +1,5 @@
 const express = require('express');
+const { validRegistrationProduct } = require('../middlewares/validRegisterProduct');
 const ProductServices = require('../services/productsService');
 
 const router = express.Router();
@@ -9,7 +10,7 @@ router
     const products = await ProductServices.getAll();
     return res.status(products.code).json(products.data);
   })
-  .post(async (req, res) => {
+  .post(validRegistrationProduct, async (req, res) => {
     const { name } = req.body;
     const registeredProduct = await ProductServices.registerProduct(name);
     return res.status(registeredProduct.code).json(registeredProduct.data);
