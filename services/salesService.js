@@ -10,9 +10,10 @@ const checkProductExists = (infosProducts) => {
 
 const handleSaleProducts = (infosProducts) => {
   checkProductExists(infosProducts);
-  infosProducts.map(async ({ productId, quantity }) => {
-    await salesModel.addSalesProducts(productId, quantity);
-  });
+  // infosProducts.map(async ({ productId, quantity }) => {
+  //   const addProduct = await salesModel.addSalesProducts(productId, quantity);
+  //   console.log(addProduct);
+  // });
 };
 
 module.exports = {

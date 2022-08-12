@@ -12,10 +12,11 @@ const checkProductExists = async (productId) => {
 
 const addSalesProducts = async (productId, quantity) => {
   const query = `
-  INSERT INTO StoreManager.sales_products(product_id, quantity)
+  INSERT INTO StoreManager.sales_products(sale_id, product_id, quantity)
   VALUE (?,?)
   `;
-  await connection.execute(query, [productId, quantity]);
+  const addProduct = await connection.execute(query, [productId, quantity]);
+  return addProduct;
 };
 
 module.exports = {
