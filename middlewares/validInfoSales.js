@@ -8,7 +8,7 @@ const schemaInfoSales = joi.object({
 
 const validInfoSales = (req, _res, next) => {
   const infosProducts = req.body;
-  infosProducts.map((infoProduct) => {
+  infosProducts.forEach((infoProduct) => {
     const validate = schemaInfoSales.validate(infoProduct);
     const { error } = validate;
     if (error) {
@@ -23,8 +23,8 @@ const validInfoSales = (req, _res, next) => {
           throw new CustomErrors(messageError, 500);
       }
     }
-    return next();
   });
+  next();
 };
 
 module.exports = validInfoSales;

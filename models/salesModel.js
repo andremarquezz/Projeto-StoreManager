@@ -10,13 +10,20 @@ const checkProductExists = async (productId) => {
   return response;
 };
 
-const addSalesProducts = async (productId, quantity) => {
-  const query = `
-  INSERT INTO StoreManager.sales_products(sale_id, product_id, quantity)
-  VALUE (?,?)
+const addSalesProducts = async (infosProducts) => {
+  const querySaleId = `
+  INSERT INTO sales(date) VALUE (now());
   `;
-  const addProduct = await connection.execute(query, [productId, quantity]);
-  return addProduct;
+  const [{ insertId }] = await connection.execute(querySaleId);
+  const queryAddProduct = `
+  INSERT INTO StoreManager.sales_products(sale_id, product_id, quantity)
+  VALUE (?,?,?)
+  `;
+
+  infosProducts.map(async ({ productId, quantity }) => {
+    await connection.execute(queryAddProduct, [insertId, productId, quantity]);
+  });
+  return insertId;
 };
 
 module.exports = {
