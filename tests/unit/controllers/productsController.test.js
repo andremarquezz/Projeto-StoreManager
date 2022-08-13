@@ -46,15 +46,15 @@ describe("Testa a camada Products Controller", () => {
     expect(res.status.calledWith(200)).to.be.equal(true);
     expect(res.json.calledWith(fakeOneProduct)).to.be.deep.eq(true);
   });
-  it("Espera que ao chamar registerProduct retorne o codigo 201 e o produto com ID", async () => {
-    sinon
-      .stub(productsService, "registerProduct")
-      .resolves({ code: 201, data: fakeRegister });
-    res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns(fakeRegister);
-    req.body = sinon.stub().returns({ name: "Jeeey" });
-    await productsController.registerProduct(req, res);
-    expect(res.status.calledWith(201)).to.be.equal(true);
-    expect(res.json.calledWith(fakeRegister)).to.be.deep.eq(true);
-  });
+  // it("Espera que ao chamar registerProduct retorne o codigo 201 e o produto com ID", async () => {
+  //   sinon
+  //     .stub(productsService, "registerProduct")
+  //     .resolves({ code: 201, data: fakeRegister });
+  //   res.status = sinon.stub().returns(res);
+  //   res.json = sinon.stub().returns(fakeRegister);
+  //   req.body = sinon.stub().returns({ name: "Jeeey" });
+  //   await productsController.registerProduct(req, res);
+  //   expect(res.status.calledWith(201)).to.be.equal(true);
+  //   expect(res.json.calledWith(fakeRegister)).to.be.deep.eq(true);
+  // });
 });
