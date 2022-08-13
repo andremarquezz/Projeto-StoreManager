@@ -1,7 +1,11 @@
 const sinon = require("sinon");
-const { expect } = require("chai");
+const chai = require("chai");
+const { expect } = chai;
+const chaiAsPromised = require("chai-as-promised");
 const productsModel = require("../../../models/productsModel");
 const connection = require("../../../models/connection");
+
+chai.use(chaiAsPromised);
 
 describe("Testa a camada Product Model", () => {
   beforeEach(sinon.restore);
@@ -13,18 +17,16 @@ describe("Testa a camada Product Model", () => {
 
   const fakeOneProduct = { id: 1, name: "Martelo de Thor" };
 
-  // it("Testa a chamada para registerProduct", async () => {
-  //   const fakeRegister = {
-  //     id: 5,
-  //     name: "teste",
-  //   };
+  it("Testa a chamada para registerProduct", async () => {
+    const fakeRegister = {
+      id: 5,
+      name: "teste",
+    };
 
-  //   sinon.stub(connection, "execute").resolves([[fakeRegister]]);
+    sinon.stub(connection, "execute").resolves([[fakeRegister]]);
 
-  //   const callRegisterProduct = await productsModel.registerProduct("teste");
-
-  //   expect(callRegisterProduct).to.be.deep.eq(fakeRegister);
-  // });
+    return expect(productsModel.registerProduct("teste")).to.be.deep.eq(fakeRegister);
+  });
 
   describe("Testa a chamada para todos os produtos", () => {
     it("Tenha as chaves necessarias em /products", async () => {
