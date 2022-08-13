@@ -25,7 +25,7 @@ describe("Testa a camada Product Model", () => {
 
     sinon.stub(connection, "execute").resolves([[fakeRegister]]);
 
-    return expect(productsModel.registerProduct("teste")).to.be.deep.eq(fakeRegister);
+    return expect(productsModel.registerProduct("teste")).to.be.eventually.deep.eq(fakeRegister);
   });
 
   describe("Testa a chamada para todos os produtos", () => {
