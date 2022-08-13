@@ -20,5 +20,11 @@ describe("Testa a camada Sales Model", () => {
       fakeResponse
     );
   });
-  
+  // it("Testa a chamada para createSalesId", async () => {
+  //   const fakeResponse = 5;
+
+  //   sinon.stub(connection, "execute").resolves([{ fakeResponse }]);
+
+  //   return expect(SalesModel.createSalesId()).to.be.eventually.eq(fakeResponse);
+  // });
 });
