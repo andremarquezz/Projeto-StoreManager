@@ -20,6 +20,9 @@ describe("Testa a camada Sales Model", () => {
       fakeResponse
     );
   });
+
+  // retorna apenas como undefined
+  
   // it("Testa a chamada para createSalesId", async () => {
   //   const fakeResponse = 5;
 
