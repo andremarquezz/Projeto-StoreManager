@@ -10,6 +10,16 @@ const checkProductExists = async (productId) => {
   return response;
 };
 
+const checkSalesExists = async (id) => {
+  const query = `
+SELECT EXISTS(
+  SELECT * FROM StoreManager.sales
+  WHERE id =  ? ) as 'exists'
+  `;
+  const [[response]] = await connection.execute(query, [id]);
+  return response;
+};
+
 const createSalesId = async () => {
   const querySaleId = `
   INSERT INTO sales(date) VALUE (now());
@@ -55,10 +65,23 @@ ORDER BY productId
   const [data] = await connection.execute(query, [id]);
   return data;
 };
+
+const deleteProduct = async (id) => {
+  const query = `
+DELETE sp.*, s.*
+FROM sales_products AS sp
+INNER JOIN sales AS s ON sp.sale_id = s.id
+WHERE s.id = ?;
+`;
+  await connection.execute(query, [id]);
+};
+
 module.exports = {
   checkProductExists,
   addSalesProducts,
   createSalesId,
   getAllSales,
   getOneSales,
+  deleteProduct,
+  checkSalesExists,
 };

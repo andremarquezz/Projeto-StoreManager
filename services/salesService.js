@@ -12,6 +12,11 @@ const checkProductExists = async (infosProducts) => {
   if (notFindProduct) throw new CustomErrors('Product not found', 404);
 };
 
+const checkSalesExists = async (id) => {
+  const response = await salesModel.checkSalesExists(id);
+  if (response.exists === 0) throw new CustomErrors('Sale not found', 404);
+};
+
 const handleSaleProducts = async (infosProducts) => {
   await checkProductExists(infosProducts);
   const idSale = await salesModel.addSalesProducts(infosProducts);
@@ -36,9 +41,15 @@ const getOneSales = async (id) => {
   return data;
 };
 
+const deleteProduct = async (id) => {
+  await checkSalesExists(id);
+  await salesModel.deleteProduct(id);
+};
+
 module.exports = {
   handleSaleProducts,
   getAllSales,
   checkProductExists,
   getOneSales,
+  deleteProduct,
 };

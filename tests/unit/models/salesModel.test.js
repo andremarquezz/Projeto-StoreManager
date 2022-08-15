@@ -21,13 +21,16 @@ describe("Testa a camada Sales Model", () => {
     );
   });
 
-  // retorna apenas como undefined
-  
   // it("Testa a chamada para createSalesId", async () => {
-  //   const fakeResponse = 5;
+  //   const response = [
+  //     {
+  //       insertId: 5,
+  //     },
+  //   ];
 
-  //   sinon.stub(connection, "execute").resolves([{ fakeResponse }]);
+  //   sinon.stub(connection, "execute").resolves([response]);
 
-  //   return expect(SalesModel.createSalesId()).to.be.eventually.eq(fakeResponse);
+  //   const call = await SalesModel.createSalesId();
+  //   expect(call).to.be.eq(response);
   // });
 });
