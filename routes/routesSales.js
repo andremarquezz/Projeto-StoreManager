@@ -9,6 +9,7 @@ router.get('/', SalesController.getAllSales);
 router.get('/:id', SalesController.getOneSales);
 
 router.post('/', validInfoSales, SalesController.handleSaleProducts);
+router.put('/:id', SalesController.updateProduct);
 
 router.delete('/:id', SalesController.deleteProduct);
 

@@ -76,6 +76,24 @@ WHERE s.id = ?;
   await connection.execute(query, [id]);
 };
 
+const findUpdatedSales = async (saleId) => {
+  const query = `
+  SELECT product_id AS productId, quantity
+  FROM sales_products
+  WHERE sale_id = ?`;
+  const [UpdatedSales] = await connection.execute(query, [saleId]);
+  return UpdatedSales;
+};
+
+const updateProduct = async (quantity, saleId, productId) => {
+  const query = `
+UPDATE sales_products
+SET quantity = ?
+WHERE sale_id = ? AND product_id = ?;
+`;
+  await connection.execute(query, [quantity, saleId, productId]);
+};
+
 module.exports = {
   checkProductExists,
   addSalesProducts,
@@ -84,4 +102,6 @@ module.exports = {
   getOneSales,
   deleteProduct,
   checkSalesExists,
+  updateProduct,
+  findUpdatedSales,
 };

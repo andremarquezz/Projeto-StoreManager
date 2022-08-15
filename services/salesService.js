@@ -46,10 +46,20 @@ const deleteProduct = async (id) => {
   await salesModel.deleteProduct(id);
 };
 
+const updateProduct = async (id, products) => {
+  await checkSalesExists(id);
+  products.forEach(async ({ productId, quantity }) => {
+    await salesModel.updateProduct(quantity, id, productId);
+  });
+  const updatedProducts = await salesModel.findUpdatedSales(id);
+  return updatedProducts;
+};
+
 module.exports = {
   handleSaleProducts,
   getAllSales,
   checkProductExists,
   getOneSales,
   deleteProduct,
+  updateProduct,
 };
