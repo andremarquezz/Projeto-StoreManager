@@ -4,9 +4,9 @@ const SalesController = require('../controllers/salesController');
 
 const router = express.Router();
 
-router.get('/', (_req, res) => {
-  res.status(200).json({ message: 'rota sales OK' });
-});
+router.get('/', SalesController.getAllSales);
+
+router.get('/:id', SalesController.getOneSales);
 
 router.post('/', validInfoSales, SalesController.handleSaleProducts);
 

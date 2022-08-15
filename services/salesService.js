@@ -22,6 +22,22 @@ const handleSaleProducts = async (infosProducts) => {
   return productsSold;
 };
 
+const getAllSales = async () => {
+  const data = await salesModel.getAllSales();
+  const MIN_SALES = 1;
+  if (data.length < MIN_SALES) throw new CustomErrors('Sale not found', 404);
+  return data;
+};
+
+const getOneSales = async (id) => {
+  const data = await salesModel.getOneSales(id);
+  const MIN_SALES = 1;
+  if (data.length < MIN_SALES) throw new CustomErrors('Sale not found', 404);
+  return data;
+};
+
 module.exports = {
   handleSaleProducts,
+  getAllSales,
+  getOneSales,
 };
