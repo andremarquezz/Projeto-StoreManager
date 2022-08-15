@@ -1,6 +1,11 @@
 const { CustomErrors } = require('../errors/CustomError');
 const ProductModel = require('../models/productsModel');
 
+const checkProductExists = async (id) => {
+  const response = await ProductModel.checkProductExists(id);
+  if (response.exists === 0) throw new CustomErrors('Product not found', 404);
+};
+
 const getAll = async () => {
   const data = await ProductModel.getAll();
   if (!data) throw new CustomErrors('Product not found', 404);
@@ -22,11 +27,6 @@ const registerProduct = async (name) => {
   return response;
 };
 
-const checkProductExists = async (id) => {
-  const response = await ProductModel.checkProductExists(id);
-  if (response.exists === 0) throw new CustomErrors('Product not found', 404);
-};
-
 const updateProduct = async (name, id) => {
   await checkProductExists(id);
   const response = await ProductModel.updateProduct(name, id);
@@ -34,9 +34,15 @@ const updateProduct = async (name, id) => {
   return response;
 };
 
+const deleteProduct = async (id) => {
+  await checkProductExists(id);
+  await ProductModel.deleteProduct(id);
+};
+
 module.exports = {
   getAll,
   getOne,
   registerProduct,
   updateProduct,
+  deleteProduct,
 };

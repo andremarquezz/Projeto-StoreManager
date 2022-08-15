@@ -60,10 +60,19 @@ WHERE id = ?;
   return updatedProduct;
 };
 
+const deleteProduct = async (id) => {
+  const query = `
+DELETE products FROM products
+WHERE id = ?
+`;
+  await connection.execute(query, [id]);
+};
+
 module.exports = {
   getAll,
   getOne,
   registerProduct,
   updateProduct,
   checkProductExists,
+  deleteProduct,
 };
