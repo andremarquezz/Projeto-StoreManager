@@ -39,5 +39,6 @@ const getOneSales = async (id) => {
 module.exports = {
   handleSaleProducts,
   getAllSales,
+  checkProductExists,
   getOneSales,
 };

@@ -1,16 +1,16 @@
 const express = require('express');
-const {
-  validRegistrationProduct,
-} = require('../middlewares/validRegisterProduct');
+const { validNameRegister } = require('../middlewares/validRegisterProduct');
 const ProductsController = require('../controllers/productsController');
+// const validInfoSales = require('../middlewares/validInfoSales');
 
 const router = express.Router();
 
-router
-  .route('/')
-  .get(ProductsController.getAll)
-  .post(validRegistrationProduct, ProductsController.registerProduct);
+router.get('/', ProductsController.getAll);
 
 router.get('/:id', ProductsController.getOne);
+
+router.post('/', validNameRegister, ProductsController.registerProduct);
+
+router.put('/:id', validNameRegister, ProductsController.updateProduct);
 
 module.exports = router;

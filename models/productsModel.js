@@ -29,8 +29,41 @@ const registerProduct = async (name) => {
   return product;
 };
 
+const checkProductExists = async (productId) => {
+  const query = `
+  SELECT EXISTS(
+  SELECT * FROM StoreManager.products
+  WHERE id =  ? ) as 'exists'
+  `;
+  const [[response]] = await connection.execute(query, [productId]);
+  return response;
+};
+
+const findUpdatedProduct = async (id) => {
+  const query = `
+SELECT id, name FROM products
+WHERE id = ?
+`;
+
+  const [[updatedProduct]] = await connection.execute(query, [id]);
+  return updatedProduct;
+};
+
+const updateProduct = async (name, id) => {
+  const query = `
+UPDATE products
+SET name = ?
+WHERE id = ?;
+`;
+  await connection.execute(query, [name, id]);
+  const updatedProduct = await findUpdatedProduct(id);
+  return updatedProduct;
+};
+
 module.exports = {
   getAll,
   getOne,
   registerProduct,
+  updateProduct,
+  checkProductExists,
 };
