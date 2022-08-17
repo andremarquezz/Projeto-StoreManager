@@ -16,7 +16,7 @@ SELECT EXISTS(
   SELECT * FROM StoreManager.sales
   WHERE id =  ? ) as 'exists'
   `;
-  const [[response]] = await connection.execute(query, [id]);
+  const [[response]] = await connection.execute(query, [id || null]);
   return response;
 };
 
@@ -81,8 +81,8 @@ const findUpdatedSales = async (saleId) => {
   SELECT product_id AS productId, quantity
   FROM sales_products
   WHERE sale_id = ?`;
-  const [UpdatedSales] = await connection.execute(query, [saleId]);
-  return UpdatedSales;
+  const [updatedSales] = await connection.execute(query, [saleId]);
+  return updatedSales;
 };
 
 const updateProduct = async (quantity, saleId, productId) => {

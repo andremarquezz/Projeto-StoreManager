@@ -46,13 +46,19 @@ const deleteProduct = async (id) => {
   await salesModel.deleteProduct(id);
 };
 
-const updateProduct = async (id, products) => {
-  await checkSalesExists(id);
-  products.forEach(async ({ productId, quantity }) => {
-    await salesModel.updateProduct(quantity, id, productId);
-  });
-  const updatedProducts = await salesModel.findUpdatedSales(id);
-  return updatedProducts;
+const updateProduct = async (saleId, products) => {
+  await checkSalesExists(saleId);
+  await checkProductExists(products);
+  await Promise.all(
+    products.map(({ productId, quantity }) =>
+      salesModel.updateProduct(quantity, saleId, productId)),
+  );
+  const updatedProducts = await salesModel.findUpdatedSales(saleId);
+  const response = {
+    saleId,
+    itemsUpdated: updatedProducts,
+  };
+  return response;
 };
 
 module.exports = {
