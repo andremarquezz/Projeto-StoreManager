@@ -30,6 +30,4 @@ const validInfoSales = (req, _res, next) => {
   next();
 };
 
-console.log(schemaInfoSales.validate());
-
 module.exports = validInfoSales;

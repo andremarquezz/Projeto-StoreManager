@@ -1,11 +1,12 @@
 const express = require('express');
 const { validNameRegister } = require('../middlewares/validRegisterProduct');
 const ProductsController = require('../controllers/productsController');
-// const validInfoSales = require('../middlewares/validInfoSales');
 
 const router = express.Router();
 
 router.get('/', ProductsController.getAll);
+
+router.get('/search', ProductsController.productsIncludeTerm);
 
 router.get('/:id', ProductsController.getOne);
 

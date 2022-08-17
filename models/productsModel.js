@@ -68,6 +68,15 @@ WHERE id = ?
   await connection.execute(query, [id]);
 };
 
+const productsIncludeTerm = async (searchTerm) => {
+  const query = `
+SELECT * FROM products
+WHERE name LIKE ?
+`;
+  const [products] = await connection.execute(query, [`%${searchTerm}%`]);
+  return products;
+};
+
 module.exports = {
   getAll,
   getOne,
@@ -75,4 +84,5 @@ module.exports = {
   updateProduct,
   checkProductExists,
   deleteProduct,
+  productsIncludeTerm,
 };

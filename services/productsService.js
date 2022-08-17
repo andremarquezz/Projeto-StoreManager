@@ -34,6 +34,12 @@ const updateProduct = async (name, id) => {
   return response;
 };
 
+const productsIncludeTerm = async (searchTerm) => {
+  let products = await ProductModel.productsIncludeTerm(searchTerm);
+  if (products.length <= 0) products = await ProductModel.getAll;
+  return products;
+};
+
 const deleteProduct = async (id) => {
   await checkProductExists(id);
   await ProductModel.deleteProduct(id);
@@ -45,4 +51,5 @@ module.exports = {
   registerProduct,
   updateProduct,
   deleteProduct,
+  productsIncludeTerm,
 };
