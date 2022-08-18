@@ -1,4 +1,5 @@
 const { NotFoundError } = require('../errors/NotFoundError');
+const { ServerError } = require('../errors/ServerError');
 const ProductModel = require('../models/productsModel');
 
 const checkProductExists = async (id) => {
@@ -22,7 +23,7 @@ const getOne = async (id) => {
 
 const registerProduct = async (name) => {
   const data = await ProductModel.registerProduct(name);
-  if (!data) throw new CustomErrors('Problema ao cadastrar produto', 500);
+  if (!data) throw new ServerError('Problema ao cadastrar produto');
   const response = { code: 201, data };
   return response;
 };
@@ -30,7 +31,7 @@ const registerProduct = async (name) => {
 const updateProduct = async (name, id) => {
   await checkProductExists(id);
   const response = await ProductModel.updateProduct(name, id);
-  if (!response) throw new CustomErrors('Problema ao atualizar o produto', 500);
+  if (!response) throw new ServerError('Problema ao atualizar o produto');
   return response;
 };
 
