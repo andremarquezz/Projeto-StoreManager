@@ -17,7 +17,7 @@ describe("Testa a camada Product Model", () => {
 
   const fakeOneProduct = { id: 1, name: "Martelo de Thor" };
 
-  it("Testa a chamada para registerProduct", async () => {
+  it("Testa a chamada para a função registerProduct", async () => {
     const fakeRegister = {
       id: 5,
       name: "teste",
@@ -25,38 +25,80 @@ describe("Testa a camada Product Model", () => {
 
     sinon.stub(connection, "execute").resolves([[fakeRegister]]);
 
-    return expect(productsModel.registerProduct("teste")).to.be.eventually.deep.eq(fakeRegister);
+    return expect(
+      productsModel.registerProduct("teste")
+    ).to.be.eventually.deep.eq(fakeRegister);
   });
 
-  describe("Testa a chamada para todos os produtos", () => {
-    it("Tenha as chaves necessarias em /products", async () => {
-      sinon.stub(connection, "execute").resolves([fakeProductsAll]);
-      const callProductsAll = await productsModel.getAll();
+  it("Verifica se possui as chaves necessarias no retorno de GetAll ", async () => {
+    sinon.stub(connection, "execute").resolves([fakeProductsAll]);
+    const callProductsAll = await productsModel.getAll();
 
-      expect(callProductsAll[0]).to.be.keys("id", "name");
-    });
-
-    it("Tenha todos os produtos em /products", async () => {
-      sinon.stub(connection, "execute").resolves([fakeProductsAll]);
-      const callProductsAll = await productsModel.getAll();
-
-      expect(callProductsAll).to.be.eq(fakeProductsAll);
-    });
+    expect(callProductsAll[0]).to.be.keys("id", "name");
   });
 
-  describe("Testa a chamada para apenas um produto", () => {
-    it("Retorna apenas um objeto com as chaves necessarias", async () => {
-      sinon.stub(connection, "execute").resolves([[fakeOneProduct]]);
+  it("Verifica se possui os produtos necessarias no retorno de GetAl", async () => {
+    sinon.stub(connection, "execute").resolves([fakeProductsAll]);
+    const callProductsAll = await productsModel.getAll();
 
-      const callProductsOne = await productsModel.getOne("1");
-
-      expect(callProductsOne).to.be.keys("id", "name");
-    });
-    it("Retorna apenas um produto", async () => {
-      sinon.stub(connection, "execute").resolves([[fakeOneProduct]]);
-      const callProductsOne = await productsModel.getOne("1");
-
-      expect(callProductsOne).to.be.eq(fakeOneProduct);
-    });
+    expect(callProductsAll).to.be.eq(fakeProductsAll);
   });
+
+  it("Retorna apenas um objeto com as chaves necessarias em GetOne", async () => {
+    sinon.stub(connection, "execute").resolves([[fakeOneProduct]]);
+
+    const callProductsOne = await productsModel.getOne("1");
+
+    expect(callProductsOne).to.be.an("object");
+    expect(callProductsOne).to.be.keys("id", "name");
+  });
+
+  it("Verifica que productsIncludeTerm que retorna um array", async () => {
+    const responseFake = [fakeOneProduct];
+    sinon.stub(connection, "execute").resolves([responseFake]);
+
+    return expect(
+      productsModel.productsIncludeTerm("martelo")
+    ).to.be.eventually.an("array");
+  });
+  it("Verifica que productsIncludeTerm retorna um produto com termo martelo", async () => {
+    const responseFake = [fakeOneProduct];
+
+    sinon.stub(connection, "execute").resolves([responseFake]);
+
+    return expect(
+      productsModel.productsIncludeTerm("martelo")
+    ).to.be.eventually.deep.eq(responseFake);
+  });
+
+  it("Verifica que checkProductExists retorna um objeto exists com valor 1", async () => {
+    const responseFake = { exists: 1 };
+
+    sinon.stub(connection, "execute").resolves([[responseFake]]);
+
+    return expect(productsModel.checkProductExists(1)).to.be.eventually.deep.eq(
+      responseFake
+    );
+  });
+  it("Verifica que updateProduct com parametros martelo e 1 retorna o produto", async () => {
+   sinon.stub(connection, "execute").resolves([[fakeOneProduct]]);
+
+   return expect(productsModel.updateProduct('martelo', 1)).to.be.eventually.deep.eq(
+     fakeOneProduct
+   );
+  });
+  it("Verifica que findUpdatedProduct encontra o produto com o ID passado", async () => {
+    sinon.stub(connection, "execute").resolves([[fakeOneProduct]]);
+
+    return expect(productsModel.findUpdatedProduct(1)).to.be.eventually.deep.eq(
+      fakeOneProduct
+    );
+  });
+   it("Verifica que deleteProduct não tem retorno", async () => {
+     sinon.stub(connection, "execute").resolves();
+
+     return expect(
+       productsModel.deleteProduct(1)
+     ).to.be.eventually.eq(undefined);
+   });
 });

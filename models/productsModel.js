@@ -85,4 +85,5 @@ module.exports = {
   updateProduct,
   checkProductExists,
   deleteProduct,
+  findUpdatedProduct,
 };
