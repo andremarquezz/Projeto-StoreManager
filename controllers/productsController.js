@@ -11,6 +11,12 @@ const getOne = async (req, res) => {
   return res.status(product.code).json(product.data);
 };
 
+const productsIncludeTerm = async (req, res) => {
+  const { q: searchTerm } = req.query;
+  const products = await ProductServices.productsIncludeTerm(searchTerm);
+  res.status(200).json(products);
+};
+
 const registerProduct = async (req, res) => {
   const { name } = req.body;
   const registeredProduct = await ProductServices.registerProduct(name);
@@ -30,17 +36,11 @@ const deleteProduct = async (req, res) => {
   res.status(204).send();
 };
 
-const productsIncludeTerm = async (req, res) => {
-  const { q: searchTerm } = req.query;
-  const products = await ProductServices.productsIncludeTerm(searchTerm);
-  res.status(200).json(products);
-};
-
 module.exports = {
   getAll,
   getOne,
+  productsIncludeTerm,
   registerProduct,
   updateProduct,
   deleteProduct,
-  productsIncludeTerm,
 };

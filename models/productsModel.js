@@ -15,6 +15,25 @@ const getOne = async (id) => {
   return data;
 };
 
+const productsIncludeTerm = async (searchTerm) => {
+  const query = `
+SELECT * FROM products
+WHERE name LIKE ?
+`;
+  const [products] = await connection.execute(query, [`%${searchTerm}%`]);
+  return products;
+};
+
+const checkProductExists = async (productId) => {
+  const query = `
+  SELECT EXISTS(
+  SELECT * FROM StoreManager.products
+  WHERE id =  ? ) as 'exists'
+  `;
+  const [[response]] = await connection.execute(query, [productId]);
+  return response;
+};
+
 const registerProduct = async (name) => {
   const query = `
   INSERT INTO StoreManager.products(name)
@@ -27,16 +46,6 @@ const registerProduct = async (name) => {
   `;
   const [[product]] = await connection.execute(querySelectProduct, [name]);
   return product;
-};
-
-const checkProductExists = async (productId) => {
-  const query = `
-  SELECT EXISTS(
-  SELECT * FROM StoreManager.products
-  WHERE id =  ? ) as 'exists'
-  `;
-  const [[response]] = await connection.execute(query, [productId]);
-  return response;
 };
 
 const findUpdatedProduct = async (id) => {
@@ -68,21 +77,12 @@ WHERE id = ?
   await connection.execute(query, [id]);
 };
 
-const productsIncludeTerm = async (searchTerm) => {
-  const query = `
-SELECT * FROM products
-WHERE name LIKE ?
-`;
-  const [products] = await connection.execute(query, [`%${searchTerm}%`]);
-  return products;
-};
-
 module.exports = {
   getAll,
   getOne,
+  productsIncludeTerm,
   registerProduct,
   updateProduct,
   checkProductExists,
   deleteProduct,
-  productsIncludeTerm,
 };

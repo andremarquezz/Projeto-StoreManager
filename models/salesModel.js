@@ -20,27 +20,6 @@ SELECT EXISTS(
   return response;
 };
 
-const createSalesId = async () => {
-  const querySaleId = `
-  INSERT INTO sales(date) VALUE (now());
-  `;
-  const [{ insertId }] = await connection.execute(querySaleId);
-  return insertId;
-};
-
-const addSalesProducts = async (infosProducts) => {
-  const saleId = await createSalesId();
-  const queryAddProduct = `
-  INSERT INTO StoreManager.sales_products(sale_id, product_id, quantity)
-  VALUE (?,?,?)
-  `;
-
-  infosProducts.map(async ({ productId, quantity }) => {
-    await connection.execute(queryAddProduct, [saleId, productId, quantity]);
-  });
-  return saleId;
-};
-
 const getAllSales = async () => {
   const query = `
 SELECT sp.sale_id AS saleId, sd.date AS date, sp.product_id AS productId, sp.quantity
@@ -66,23 +45,25 @@ ORDER BY productId
   return data;
 };
 
-const deleteProduct = async (id) => {
-  const query = `
-DELETE sp.*, s.*
-FROM sales_products AS sp
-INNER JOIN sales AS s ON sp.sale_id = s.id
-WHERE s.id = ?;
-`;
-  await connection.execute(query, [id]);
+const createSalesId = async () => {
+  const querySaleId = `
+  INSERT INTO sales(date) VALUE (now());
+  `;
+  const [{ insertId }] = await connection.execute(querySaleId);
+  return insertId;
 };
 
-const findUpdatedSales = async (saleId) => {
-  const query = `
-  SELECT product_id AS productId, quantity
-  FROM sales_products
-  WHERE sale_id = ?`;
-  const [updatedSales] = await connection.execute(query, [saleId]);
-  return updatedSales;
+const addSalesProducts = async (infosProducts) => {
+  const saleId = await createSalesId();
+  const queryAddProduct = `
+  INSERT INTO StoreManager.sales_products(sale_id, product_id, quantity)
+  VALUE (?,?,?)
+  `;
+
+  infosProducts.map(async ({ productId, quantity }) => {
+    await connection.execute(queryAddProduct, [saleId, productId, quantity]);
+  });
+  return saleId;
 };
 
 const updateProduct = async (quantity, saleId, productId) => {
@@ -94,14 +75,32 @@ WHERE sale_id = ? AND product_id = ?;
   await connection.execute(query, [quantity, saleId, productId]);
 };
 
+const findUpdatedSales = async (saleId) => {
+  const query = `
+  SELECT product_id AS productId, quantity
+  FROM sales_products
+  WHERE sale_id = ?`;
+  const [updatedSales] = await connection.execute(query, [saleId]);
+  return updatedSales;
+};
+
+const deleteProduct = async (id) => {
+  const query = `
+DELETE sp.*, s.*
+FROM sales_products AS sp
+INNER JOIN sales AS s ON sp.sale_id = s.id
+WHERE s.id = ?;
+`;
+  await connection.execute(query, [id]);
+};
+
 module.exports = {
   checkProductExists,
-  addSalesProducts,
-  createSalesId,
+  checkSalesExists,
   getAllSales,
   getOneSales,
+  addSalesProducts,
   deleteProduct,
-  checkSalesExists,
   updateProduct,
   findUpdatedSales,
 };

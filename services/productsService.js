@@ -2,11 +2,6 @@ const { NotFoundError } = require('../errors/NotFoundError');
 const { ServerError } = require('../errors/ServerError');
 const ProductModel = require('../models/productsModel');
 
-const checkProductExists = async (id) => {
-  const response = await ProductModel.checkProductExists(id);
-  if (response.exists === 0) throw new NotFoundError('Product not found');
-};
-
 const getAll = async () => {
   const data = await ProductModel.getAll();
   if (!data) throw new NotFoundError('Product not found');
@@ -19,6 +14,17 @@ const getOne = async (id) => {
   if (!data) throw new NotFoundError('Product not found');
   const response = { code: 200, data };
   return response;
+};
+
+const productsIncludeTerm = async (searchTerm) => {
+  let products = await ProductModel.productsIncludeTerm(searchTerm);
+  if (products.length <= 0) products = await ProductModel.getAll;
+  return products;
+};
+
+const checkProductExists = async (id) => {
+  const response = await ProductModel.checkProductExists(id);
+  if (response.exists === 0) throw new NotFoundError('Product not found');
 };
 
 const registerProduct = async (name) => {
@@ -35,12 +41,6 @@ const updateProduct = async (name, id) => {
   return response;
 };
 
-const productsIncludeTerm = async (searchTerm) => {
-  let products = await ProductModel.productsIncludeTerm(searchTerm);
-  if (products.length <= 0) products = await ProductModel.getAll;
-  return products;
-};
-
 const deleteProduct = async (id) => {
   await checkProductExists(id);
   await ProductModel.deleteProduct(id);
@@ -49,8 +49,8 @@ const deleteProduct = async (id) => {
 module.exports = {
   getAll,
   getOne,
+  productsIncludeTerm,
   registerProduct,
   updateProduct,
   deleteProduct,
-  productsIncludeTerm,
 };
