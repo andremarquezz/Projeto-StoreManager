@@ -1,4 +1,4 @@
-const { CustomErrors } = require('../errors/CustomError');
+const { NotFoundError } = require('../errors/NotFoundError');
 const salesModel = require('../models/salesModel');
 
 const checkProductExists = async (infosProducts) => {
@@ -9,12 +9,12 @@ const checkProductExists = async (infosProducts) => {
     }),
   );
   const notFindProduct = responses.some((response) => response.exists === 0);
-  if (notFindProduct) throw new CustomErrors('Product not found', 404);
+  if (notFindProduct) throw new NotFoundError('Product not found');
 };
 
 const checkSalesExists = async (id) => {
   const response = await salesModel.checkSalesExists(id);
-  if (response.exists === 0) throw new CustomErrors('Sale not found', 404);
+  if (response.exists === 0) throw new NotFoundError('Sale not found');
 };
 
 const handleSaleProducts = async (infosProducts) => {
@@ -30,14 +30,14 @@ const handleSaleProducts = async (infosProducts) => {
 const getAllSales = async () => {
   const data = await salesModel.getAllSales();
   const MIN_SALES = 1;
-  if (data.length < MIN_SALES) throw new CustomErrors('Sale not found', 404);
+  if (data.length < MIN_SALES) throw new NotFoundError('Sale not found');
   return data;
 };
 
 const getOneSales = async (id) => {
   const data = await salesModel.getOneSales(id);
   const MIN_SALES = 1;
-  if (data.length < MIN_SALES) throw new CustomErrors('Sale not found', 404);
+  if (data.length < MIN_SALES) throw new NotFoundError('Sale not found');
   return data;
 };
 

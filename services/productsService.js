@@ -1,21 +1,21 @@
-const { CustomErrors } = require('../errors/CustomError');
+const { NotFoundError } = require('../errors/NotFoundError');
 const ProductModel = require('../models/productsModel');
 
 const checkProductExists = async (id) => {
   const response = await ProductModel.checkProductExists(id);
-  if (response.exists === 0) throw new CustomErrors('Product not found', 404);
+  if (response.exists === 0) throw new NotFoundError('Product not found');
 };
 
 const getAll = async () => {
   const data = await ProductModel.getAll();
-  if (!data) throw new CustomErrors('Product not found', 404);
+  if (!data) throw new NotFoundError('Product not found');
   const response = { code: 200, data };
   return response;
 };
 
 const getOne = async (id) => {
   const data = await ProductModel.getOne(id);
-  if (!data) throw new CustomErrors('Product not found', 404);
+  if (!data) throw new NotFoundError('Product not found');
   const response = { code: 200, data };
   return response;
 };
