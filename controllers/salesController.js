@@ -6,14 +6,14 @@ const salesController = {
     res.status(201).json(response);
   },
 
-  getAllSales: async (_req, res) => {
-    const response = await SalesService.getAllSales();
+  getAll: async (_req, res) => {
+    const response = await SalesService.getAll();
     res.status(200).json(response);
   },
 
-  getOneSales: async (req, res) => {
+  getOne: async (req, res) => {
     const { id } = req.params;
-    const response = await SalesService.getOneSales(id);
+    const response = await SalesService.getOne(id);
     res.status(200).json(response);
   },
 

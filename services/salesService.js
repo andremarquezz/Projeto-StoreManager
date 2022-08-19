@@ -18,15 +18,15 @@ const salesService = {
     if (response.exists === 0) throw new NotFoundError('Sale not found');
   },
 
-  getAllSales: async () => {
-    const data = await salesModel.getAllSales();
+  getAll: async () => {
+    const data = await salesModel.getAll();
     const MIN_SALES = 1;
     if (data.length < MIN_SALES) throw new NotFoundError('Sale not found');
     return data;
   },
 
-  getOneSales: async (id) => {
-    const data = await salesModel.getOneSales(id);
+  getOne: async (id) => {
+    const data = await salesModel.getOne(id);
     const MIN_SALES = 1;
     if (data.length < MIN_SALES) throw new NotFoundError('Sale not found');
     return data;

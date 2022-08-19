@@ -21,7 +21,7 @@ SELECT EXISTS(
     return response;
   },
 
-  getAllSales: async () => {
+  getAll: async () => {
     const query = `
 SELECT sp.sale_id AS saleId, sd.date AS date, sp.product_id AS productId, sp.quantity
 FROM sales_products AS sp
@@ -33,7 +33,7 @@ ORDER BY saleId, productId
     return data;
   },
 
-  getOneSales: async (id) => {
+  getOne: async (id) => {
     const query = `
 SELECT sd.date AS date, sp.product_id AS productId, sp.quantity
 FROM sales_products AS sp

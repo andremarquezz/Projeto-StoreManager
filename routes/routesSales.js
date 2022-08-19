@@ -4,9 +4,9 @@ const SalesController = require('../controllers/salesController');
 
 const router = express.Router();
 
-router.get('/', SalesController.getAllSales);
+router.get('/', SalesController.getAll);
 
-router.get('/:id', SalesController.getOneSales);
+router.get('/:id', SalesController.getOne);
 
 router.post('/', validInfoSales, SalesController.handleSaleProducts);
 router.put('/:id', validInfoSales, SalesController.updateProduct);
