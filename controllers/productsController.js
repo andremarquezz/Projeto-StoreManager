@@ -1,46 +1,36 @@
-const ProductServices = require('../services/productsService');
+const ProductsService = require('../services/productsService');
 
-const getAll = async (_req, res) => {
-  const products = await ProductServices.getAll();
-  return res.status(products.code).json(products.data);
+const productsController = {
+  getAll: async (_req, res) => {
+    const products = await ProductsService.getAll();
+    return res.status(products.code).json(products.data);
+  },
+  getOne: async (req, res) => {
+    const { id } = req.params;
+    const product = await ProductsService.getOne(id);
+    return res.status(product.code).json(product.data);
+  },
+  productsIncludeTerm: async (req, res) => {
+    const { q: searchTerm } = req.query;
+    const products = await ProductsService.productsIncludeTerm(searchTerm);
+    res.status(200).json(products);
+  },
+  registerProduct: async (req, res) => {
+    const { name } = req.body;
+    const registeredProduct = await ProductsService.registerProduct(name);
+    return res.status(registeredProduct.code).json(registeredProduct.data);
+  },
+  updateProduct: async (req, res) => {
+    const { name } = req.body;
+    const { id } = req.params;
+    const updatedProduct = await ProductsService.updateProduct(name, id);
+    res.status(200).json(updatedProduct);
+  },
+  deleteProduct: async (req, res) => {
+    const { id } = req.params;
+    await ProductsService.deleteProduct(id);
+    res.status(204).send();
+  },
 };
 
-const getOne = async (req, res) => {
-  const { id } = req.params;
-  const product = await ProductServices.getOne(id);
-  return res.status(product.code).json(product.data);
-};
-
-const productsIncludeTerm = async (req, res) => {
-  const { q: searchTerm } = req.query;
-  const products = await ProductServices.productsIncludeTerm(searchTerm);
-  res.status(200).json(products);
-};
-
-const registerProduct = async (req, res) => {
-  const { name } = req.body;
-  const registeredProduct = await ProductServices.registerProduct(name);
-  return res.status(registeredProduct.code).json(registeredProduct.data);
-};
-
-const updateProduct = async (req, res) => {
-  const { name } = req.body;
-  const { id } = req.params;
-  const updatedProduct = await ProductServices.updateProduct(name, id);
-  res.status(200).json(updatedProduct);
-};
-
-const deleteProduct = async (req, res) => {
-  const { id } = req.params;
-  await ProductServices.deleteProduct(id);
-  res.status(204).send();
-};
-
-module.exports = {
-  getAll,
-  getOne,
-  productsIncludeTerm,
-  registerProduct,
-  updateProduct,
-  deleteProduct,
-};
+module.exports = productsController;
