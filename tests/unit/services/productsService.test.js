@@ -57,16 +57,15 @@ describe("Testa a camada Products Service", () => {
     ).to.be.deep.eventually.eq([fakeOneProduct]);
   });
 
+  it("Verifica que ao chamar productsIncludeTerm sem termo retorna um array com todos os produtos", async () => {
+    sinon.stub(ProductsModel, "productsIncludeTerm").resolves([]);
+    sinon.stub(ProductsModel, "getAll").resolves(fakeProductsAll);
 
-  // como testar que a função foi chamada ?? 
-  // it("Verifica que ao chamar productsIncludeTerm sem termo retorna um array com todos os produtos", async () => {
-  //   sinon.stub(ProductsModel, "productsIncludeTerm").resolves([]);
-  //   sinon.stub(ProductsModel, "getAll").resolves(fakeProductsAll);
+    await ProductsService.productsIncludeTerm('zzz');
 
-  //   return expect(ProductsService.productsIncludeTerm()).to.have.deep.eventually.eq(
-  //     fakeProductsAll
-  //   );
-  // });
+    expect(ProductsModel.getAll.calledWith()).to.be.eq(true);
+    
+  });
 
   it("Verifica que ao chamar updateProduct retorna um objeto com o produto atualizado", async () => {
     const fakeProductUpdated = {

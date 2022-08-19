@@ -17,7 +17,7 @@ const productsService = {
   },
   productsIncludeTerm: async (searchTerm) => {
     let products = await ProductsModel.productsIncludeTerm(searchTerm);
-    if (products.length <= 0) products = await ProductsModel.getAll;
+    if (products.length <= 0) products = await ProductsModel.getAll();
     return products;
   },
   checkProductExists: async (id) => {
