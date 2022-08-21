@@ -61,10 +61,9 @@ describe("Testa a camada Products Service", () => {
     sinon.stub(ProductsModel, "productsIncludeTerm").resolves([]);
     sinon.stub(ProductsModel, "getAll").resolves(fakeProductsAll);
 
-    await ProductsService.productsIncludeTerm('zzz');
+    await ProductsService.productsIncludeTerm("zzz");
 
     expect(ProductsModel.getAll.calledWith()).to.be.eq(true);
-    
   });
 
   it("Verifica que ao chamar updateProduct retorna um objeto com o produto atualizado", async () => {
@@ -72,6 +71,7 @@ describe("Testa a camada Products Service", () => {
       id: 1,
       name: "machado",
     };
+    sinon.stub(ProductsService, "checkProductExists").resolves();
     sinon.stub(ProductsModel, "updateProduct").resolves(fakeProductUpdated);
 
     return expect(ProductsService.updateProduct("machado", 1))
@@ -80,6 +80,7 @@ describe("Testa a camada Products Service", () => {
   });
 
   it("Verifica que ao chamar deleteProduct não tem retorno", async () => {
+    sinon.stub(ProductsService, "checkProductExists").resolves();
     sinon.stub(ProductsModel, "deleteProduct").resolves();
 
     return expect(ProductsService.deleteProduct(1)).to.be.deep.eventually.eq(
@@ -88,15 +89,15 @@ describe("Testa a camada Products Service", () => {
   });
 
   it("Verifica que ao chamar deleteProduct verifica se o id existe", async () => {
-    sinon.stub(ProductsModel, "deleteProduct").resolves();
     sinon.stub(ProductsService, "checkProductExists").resolves();
+    sinon.stub(ProductsModel, "deleteProduct").resolves();
 
     return expect(ProductsService.deleteProduct(1)).to.be.deep.eventually.eq(
       undefined
     );
   });
 
-  describe("Testa tratamento de erros", () => {
+  describe("Testa tratamento de erros em Products Service", () => {
     it("Verifica que getAll retorna um erro caso não consiga capturar todos os produtos", async () => {
       sinon.stub(ProductsModel, "getAll").resolves(null);
       return expect(ProductsService.getAll())
@@ -111,14 +112,14 @@ describe("Testa a camada Products Service", () => {
         .and.be.an.instanceOf(NotFoundError)
         .and.have.property("code", 404);
     });
-    it("Verifica que  registerProduct retorna um erro caso não consiga registrar o produto", async () => {
+    it("Verifica que registerProduct retorna um erro caso não consiga registrar o produto", async () => {
       sinon.stub(ProductsModel, "registerProduct").resolves(null);
       return expect(ProductsService.registerProduct("teste"))
         .to.eventually.rejectedWith("Problema ao cadastrar produto")
         .and.be.an.instanceOf(ServerError)
         .and.have.property("code", 500);
     });
-    it("Verifica que  checkProductExists retorna um erro caso não consiga encontrar o produto", async () => {
+    it("Verifica que checkProductExists retorna um erro caso não consiga encontrar o produto", async () => {
       sinon.stub(ProductsModel, "checkProductExists").resolves({ exists: 0 });
       return expect(ProductsService.checkProductExists(5))
         .to.eventually.rejectedWith("Product not found")
@@ -126,7 +127,9 @@ describe("Testa a camada Products Service", () => {
         .and.have.property("code", 404);
     });
     it("Verifica que updateProduct retorna um erro caso não consiga atualizar um produto", async () => {
+      sinon.stub(ProductsService, "checkProductExists").resolves();
       sinon.stub(ProductsModel, "updateProduct").resolves();
+
       return expect(ProductsService.updateProduct("teste", 1))
         .to.eventually.rejectedWith("Problema ao atualizar o produto")
         .and.be.an.instanceOf(ServerError)

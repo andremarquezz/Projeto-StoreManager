@@ -17,7 +17,7 @@ SELECT EXISTS(
   SELECT * FROM StoreManager.sales
   WHERE id =  ? ) as 'exists'
   `;
-    const [[response]] = await connection.execute(query, [id || null]);
+    const [[response]] = await connection.execute(query, [id]);
     return response;
   },
 
@@ -35,11 +35,11 @@ ORDER BY saleId, productId
 
   getOne: async (id) => {
     const query = `
-SELECT sd.date AS date, sp.product_id AS productId, sp.quantity
+SELECT sp.sale_id AS saleId, sd.date AS date, sp.product_id AS productId, sp.quantity
 FROM sales_products AS sp
 INNER JOIN sales AS sd ON sp.sale_id = sd.id
 WHERE sale_id = ?
-ORDER BY productId
+ORDER BY productId;
 `;
 
     const [data] = await connection.execute(query, [id]);

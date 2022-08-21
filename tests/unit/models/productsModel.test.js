@@ -30,14 +30,14 @@ describe("Testa a camada Product Model", () => {
     ).to.be.eventually.deep.eq(fakeRegister);
   });
 
-  it("Verifica se possui as chaves necessarias no retorno de GetAll ", async () => {
+  it("Verifica que possui as chaves necessarias no retorno de GetAll ", async () => {
     sinon.stub(connection, "execute").resolves([fakeProductsAll]);
     const callProductsAll = await productsModel.getAll();
 
     expect(callProductsAll[0]).to.be.keys("id", "name");
   });
 
-  it("Verifica se possui os produtos necessarias no retorno de GetAl", async () => {
+  it("Verifica que possui os produtos necessarias no retorno de GetAl", async () => {
     sinon.stub(connection, "execute").resolves([fakeProductsAll]);
     const callProductsAll = await productsModel.getAll();
 
