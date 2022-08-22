@@ -3,12 +3,12 @@ const ProductsService = require('../services/productsService');
 const productsController = {
   getAll: async (_req, res) => {
     const products = await ProductsService.getAll();
-    return res.status(products.code).json(products.data);
+    return res.status(200).json(products);
   },
   getOne: async (req, res) => {
     const { id } = req.params;
     const product = await ProductsService.getOne(id);
-    return res.status(product.code).json(product.data);
+    return res.status(200).json(product);
   },
   productsIncludeTerm: async (req, res) => {
     const { q: searchTerm } = req.query;
@@ -18,7 +18,7 @@ const productsController = {
   registerProduct: async (req, res) => {
     const { name } = req.body;
     const registeredProduct = await ProductsService.registerProduct(name);
-    return res.status(registeredProduct.code).json(registeredProduct.data);
+    return res.status(201).json(registeredProduct);
   },
   updateProduct: async (req, res) => {
     const { name } = req.body;

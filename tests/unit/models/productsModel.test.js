@@ -37,14 +37,14 @@ describe("Testa a camada Product Model", () => {
     expect(callProductsAll[0]).to.be.keys("id", "name");
   });
 
-  it("Verifica que possui os produtos necessarias no retorno de GetAl", async () => {
+  it("Verifica que GetAll retorna os produtos necessarias", async () => {
     sinon.stub(connection, "execute").resolves([fakeProductsAll]);
     const callProductsAll = await productsModel.getAll();
 
     expect(callProductsAll).to.be.eq(fakeProductsAll);
   });
 
-  it("Retorna apenas um objeto com as chaves necessarias em GetOne", async () => {
+  it("Verifica que getOne retorna apenas um objeto com as chaves necessarias", async () => {
     sinon.stub(connection, "execute").resolves([[fakeOneProduct]]);
 
     const callProductsOne = await productsModel.getOne("1");
@@ -53,7 +53,7 @@ describe("Testa a camada Product Model", () => {
     expect(callProductsOne).to.be.keys("id", "name");
   });
 
-  it("Verifica que productsIncludeTerm que retorna um array", async () => {
+  it("Verifica que productsIncludeTerm retorna um array", async () => {
     const responseFake = [fakeOneProduct];
     sinon.stub(connection, "execute").resolves([responseFake]);
 

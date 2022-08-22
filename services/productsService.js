@@ -6,14 +6,12 @@ const productsService = {
   getAll: async () => {
     const data = await ProductsModel.getAll();
     if (!data) throw new NotFoundError('Product not found');
-    const response = { code: 200, data };
-    return response;
+    return data;
   },
   getOne: async (id) => {
     const data = await ProductsModel.getOne(id);
     if (!data) throw new NotFoundError('Product not found');
-    const response = { code: 200, data };
-    return response;
+    return data;
   },
   productsIncludeTerm: async (searchTerm) => {
     let products = await ProductsModel.productsIncludeTerm(searchTerm);
@@ -28,8 +26,7 @@ const productsService = {
   registerProduct: async (name) => {
     const data = await ProductsModel.registerProduct(name);
     if (!data) throw new ServerError('Problema ao cadastrar produto');
-    const response = { code: 201, data };
-    return response;
+    return data;
   },
   updateProduct: async (name, id) => {
     await productsService.checkProductExists(id);

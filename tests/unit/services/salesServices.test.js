@@ -41,13 +41,13 @@ describe("Testa a camada sales Service", () => {
     return expect(SalesService.checkSalesExists(1)).to.be.eventually.true;
   });
 
-  it("Verifica que ao chamar getAll retorna as vendas", async () => {
+  it("Verifica que getAll retorna as vendas", async () => {
     sinon.stub(SalesModel, "getAll").resolves(fakeSalesAll);
 
     return expect(SalesService.getAll()).to.be.eventually.deep.eq(fakeSalesAll);
   });
 
-  it("Verifica que ao chamar getOne retorna as vendas com o ID", async () => {
+  it("Verifica que getOne retorna as vendas com o ID", async () => {
     sinon.stub(SalesModel, "getOne").resolves(fakeSalesOne);
 
     return expect(SalesService.getOne("1")).to.be.eventually.deep.eq(
@@ -55,7 +55,7 @@ describe("Testa a camada sales Service", () => {
     );
   });
 
-  it("Verifica que ao chamar handleSaleProducts retorna um produto vendido", async () => {
+  it("Verifica que handleSaleProducts retorna um produto vendido", async () => {
     sinon.stub(SalesService, "checkProductExists").resolves();
     sinon.stub(SalesModel, "addSalesProducts").resolves(2);
 
@@ -69,7 +69,7 @@ describe("Testa a camada sales Service", () => {
     ).to.be.eventually.deep.eq(response);
   });
 
-  it("Verifica que ao chamar deleteProduct não tem retorno", async () => {
+  it("Verifica que deleteProduct não tem retorno", async () => {
     sinon.stub(SalesService, "checkSalesExists").resolves();
     sinon.stub(SalesModel, "deleteProduct").resolves();
 
@@ -86,7 +86,7 @@ describe("Testa a camada sales Service", () => {
       .eventually.true;
   });
 
-  it("Verifica que ao chamar updateProduct retorna um produto atualizado", async () => {
+  it("Verifica que updateProduct retorna um produto atualizado", async () => {
     sinon.stub(SalesService, "checkSalesExists").resolves();
     sinon.stub(SalesService, "checkProductExists").resolves();
     sinon.stub(SalesModel, "updateProduct").resolves();

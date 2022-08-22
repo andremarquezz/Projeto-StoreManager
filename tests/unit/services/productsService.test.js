@@ -20,36 +20,31 @@ describe("Testa a camada Products Service", () => {
 
   const fakeOneProduct = { id: 1, name: "Martelo de Thor" };
 
-  it("Verifica que ao chamar registerProduct retorna o codigo 201 e o produto ", async () => {
+  it("Verifica registerProduct retorna o produto ", async () => {
     sinon.stub(ProductsModel, "registerProduct").resolves(fakeOneProduct);
 
     return expect(
       ProductsService.registerProduct("Martelo de Thor")
-    ).to.be.eventually.deep.eq({
-      code: 201,
-      data: fakeOneProduct,
-    });
+    ).to.be.eventually.deep.eq(fakeOneProduct);
   });
 
-  it("Verifica que ao chamar getAll retorna o codigo 200 e os produtos", async () => {
+  it("Verifica que getAll retorna os produtos", async () => {
     sinon.stub(ProductsModel, "getAll").resolves(fakeProductsAll);
 
-    return expect(ProductsService.getAll()).to.be.eventually.deep.eq({
-      code: 200,
-      data: fakeProductsAll,
-    });
+    return expect(ProductsService.getAll()).to.be.eventually.deep.eq(
+      fakeProductsAll
+    );
   });
 
-  it("Verifica que ao chamar getOne retorna o codigo 200 e o produto", async () => {
+  it("Verifica que getOne retorna um unico produto", async () => {
     sinon.stub(ProductsModel, "getOne").resolves(fakeOneProduct);
 
-    return expect(ProductsService.getOne("1")).to.be.eventually.deep.eq({
-      code: 200,
-      data: fakeOneProduct,
-    });
+    return expect(ProductsService.getOne("1")).to.be.eventually.deep.eq(
+      fakeOneProduct
+    );
   });
 
-  it("Verifica que ao chamar productsIncludeTerm retorna um array com os produtos que possuem o termo", async () => {
+  it("Verifica que productsIncludeTerm retorna um array com os produtos que possuem o termo", async () => {
     sinon.stub(ProductsModel, "productsIncludeTerm").resolves([fakeOneProduct]);
 
     return expect(
@@ -57,7 +52,7 @@ describe("Testa a camada Products Service", () => {
     ).to.be.deep.eventually.eq([fakeOneProduct]);
   });
 
-  it("Verifica que ao chamar productsIncludeTerm sem termo retorna um array com todos os produtos", async () => {
+  it("Verifica que productsIncludeTerm sem termo retorna um array com todos os produtos", async () => {
     sinon.stub(ProductsModel, "productsIncludeTerm").resolves([]);
     sinon.stub(ProductsModel, "getAll").resolves(fakeProductsAll);
 
@@ -66,7 +61,7 @@ describe("Testa a camada Products Service", () => {
     expect(ProductsModel.getAll.calledWith()).to.be.eq(true);
   });
 
-  it("Verifica que ao chamar updateProduct retorna um objeto com o produto atualizado", async () => {
+  it("Verifica que updateProduct retorna um objeto com o produto atualizado", async () => {
     const fakeProductUpdated = {
       id: 1,
       name: "machado",
@@ -79,12 +74,12 @@ describe("Testa a camada Products Service", () => {
       .and.include({ name: "machado" });
   });
 
-  it("Verifica que ao chamar checkProductExists retorna true caso consiga encontrar o produto", async () => {
+  it("Verifica que checkProductExists retorna true caso consiga encontrar o produto", async () => {
     sinon.stub(ProductsModel, "checkProductExists").resolves({ exists: 1 });
     return expect(ProductsService.checkProductExists(1)).to.be.eventually.true;
   });
 
-  it("Verifica que ao chamar deleteProduct não tem retorno", async () => {
+  it("Verifica que deleteProduct não tem retorno", async () => {
     sinon.stub(ProductsService, "checkProductExists").resolves();
     sinon.stub(ProductsModel, "deleteProduct").resolves();
 
@@ -93,7 +88,7 @@ describe("Testa a camada Products Service", () => {
     );
   });
 
-  it("Verifica que ao chamar deleteProduct verifica se o id existe", async () => {
+  it("Verifica que deleteProduct checa se o id existe", async () => {
     sinon.stub(ProductsService, "checkProductExists").resolves();
     sinon.stub(ProductsModel, "deleteProduct").resolves();
 
