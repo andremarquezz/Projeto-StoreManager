@@ -39,7 +39,7 @@ describe("Testa a camada Sales Controller", () => {
 
     await SalesController.handleSaleProducts(req, res);
 
-    expect(res.status.calledWith(200)).to.be.true;
+    expect(res.status.calledWith(201)).to.be.true;
     expect(res.json.calledWith(fakeProductsSold)).to.be.deep.true;
   });
 
