@@ -1,7 +1,7 @@
 <img src="https://img.shields.io/github/issues/andremarquezz/Projeto-StoreManager"/> <img src="https://img.shields.io/github/forks/andremarquezz/Projeto-StoreManager"/> <img src="https://img.shields.io/github/stars/andremarquezz/Projeto-StoreManager"/> <img src="https://img.shields.io/github/license/andremarquezz/Projeto-StoreManager"/>
 
 <h1 align="center">Projeto Store Manager</h1>
-<p align="center">Um sistema de gerenciamento de vendas no formato dropshipping em que é possível criar, visualizar, deletar e atualizar produtos e vendas.!</p>
+<p align="center">Um sistema de gerenciamento de vendas no formato dropshipping em que é possível criar, visualizar, atualizar e deletar, produtos e vendas.!</p>
 
 # Sumário
 
@@ -19,7 +19,7 @@
 
 ---
 
-<p>A API RESTful é um sistema de gerenciamento de vendas no formato dropshipping em que é possível criar, visualizar, atualizar, deletar produtos e vendas, desenvolvido dentro de containers docker utilizando um banco de dados MySQL</p>
+<p>Esta API RESTful é um sistema de gerenciamento de vendas no formato dropshipping em que é possível criar, visualizar, atualizar e deletar, produtos e vendas, a API foi desenvolvida dentro de containers docker utilizando um banco de dados MySQL</p>
 
 - Você pode consultar informaçoes sobre as rotas **[aqui!](https://github.com/andremarquezz/Projeto-StoreManager/wiki/Endpoints)**
  
