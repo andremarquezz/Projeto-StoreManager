@@ -21,7 +21,8 @@
 
 <p>A API RESTful é um sistema de gerenciamento de vendas no formato dropshipping em que é possível criar, visualizar, atualizar, deletar produtos e vendas, utilizando um banco de dados MySQL</p>
 
-- Você pode consultar informaçoes sobre as rotas e testes **[aqui!](https://github.com/andremarquezz/Projeto-StoreManager/wiki)**
+- Você pode consultar informaçoes sobre as rotas **[aqui!](https://github.com/andremarquezz/Projeto-StoreManager/wiki/Endpoints)**
+- Você pode consultar informaçoes sobre os testes **[aqui!](https://github.com/andremarquezz/Projeto-StoreManager/wiki/Testes)**
 
   
 
