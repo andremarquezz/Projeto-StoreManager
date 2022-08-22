@@ -11,11 +11,13 @@ const salesService = {
     );
     const notFindProduct = responses.some((response) => response.exists === 0);
     if (notFindProduct) throw new NotFoundError('Product not found');
+    return true;
   },
 
   checkSalesExists: async (id) => {
     const response = await salesModel.checkSalesExists(id);
     if (response.exists === 0) throw new NotFoundError('Sale not found');
+    return true;
   },
 
   getAll: async () => {
