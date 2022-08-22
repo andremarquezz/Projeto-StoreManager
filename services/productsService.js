@@ -23,6 +23,7 @@ const productsService = {
   checkProductExists: async (id) => {
     const response = await ProductsModel.checkProductExists(id);
     if (response.exists === 0) throw new NotFoundError('Product not found');
+    return true;
   },
   registerProduct: async (name) => {
     const data = await ProductsModel.registerProduct(name);

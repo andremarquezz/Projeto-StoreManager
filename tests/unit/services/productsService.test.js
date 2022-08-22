@@ -79,6 +79,11 @@ describe("Testa a camada Products Service", () => {
       .and.include({ name: "machado" });
   });
 
+  it("Verifica que ao chamar checkProductExists retorna true caso consiga encontrar o produto", async () => {
+    sinon.stub(ProductsModel, "checkProductExists").resolves({ exists: 1 });
+    return expect(ProductsService.checkProductExists(1)).to.be.eventually.true;
+  });
+
   it("Verifica que ao chamar deleteProduct não tem retorno", async () => {
     sinon.stub(ProductsService, "checkProductExists").resolves();
     sinon.stub(ProductsModel, "deleteProduct").resolves();
