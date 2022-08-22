@@ -13,6 +13,8 @@
 
 • [Como executar o projeto](#-como-executar-o-projeto)
 
+• [Dicas de scripts prontos](#-dicas-de-scripts-prontos)
+
 ### 📃 Sobre o Projeto
 
 ---
@@ -91,6 +93,8 @@ _Instale as dependências `dentro do container` com_
 ```jsx
 npm install
 ```
+
+⚠️Atenção: Caso opte por utilizar o Docker, TODOS os scripts disponíveis no package.json devem ser executados DENTRO do container, ou seja, no terminal que aparece após a execução do comando docker exec.
   
   </details>
   
@@ -106,6 +110,43 @@ npm install
 ```
 - Para rodar o projeto desta forma, **obrigatoriamente** você deve ter o `node` instalado em seu computador.
   - Recomenda-se a versão `^16`
+  
+ ⚠️Atenção: Não esqueça de renomear/configurar o arquivo .env.example
+</details>
+
+---
+
+
+### 💡 Dicas de scripts prontos
+<details>
+  <summary><strong>Scripts</strong></summary><br />
+
+  - Criar o banco de dados e gerar as tabelas:
+  ```sh
+    npm run migration
+  ```
+
+  - Limpar e popular o banco de dados:
+  ```sh
+    npm run seed
+  ```
+
+  - Iniciar o servidor Node:
+  ```sh
+    npm start
+  ```
+
+  - Iniciar o servidor Node com nodemon:
+  ```sh
+    npm run dev
+  ```
+
+  - Executar os testes de unidade:
+  ```sh
+    npm run test:mocha
+  ```
+
+  <br />
 </details>
 
 ---
